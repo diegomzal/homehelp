@@ -1,3 +1,3 @@
 export const mongodb = {
-    "URI": "mongodb://localhost/bd_usuarios"
+    "URI": "mongodb+srv://usuariohh:homehelp@cluster0-aysz2.mongodb.net/test?retryWrites=true"
 };
