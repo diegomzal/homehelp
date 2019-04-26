@@ -8,10 +8,10 @@ const userSchema = new Schema({
     password: String,
     name: String,
     lastname: String,
-    phone: Number,
-    dni: Number,
+    phone: String,
+    dni: String,
     direccion: String,
-    esTecnico: Boolean,
+    esTecnico: String,
     especialidad: String
 })
 

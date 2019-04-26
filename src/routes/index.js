@@ -42,3 +42,5 @@ function isAuthenticated(req, res, next){
     }
     res.redirect('/login')
 }
+
+module.exports = router;

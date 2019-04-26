@@ -7,40 +7,56 @@ passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passport.deserializeUser(async(id, done) => {
-    const user = await User.findById(id);   
-    done(null, user); 
+passport.deserializeUser(async (id, done) => {
+    const user = await User.findById(id);
+    done(null, user);
 });
 
 passport.use('local-register', new LocalStrategy({
-    usernameField: 'email',
+    usernameField: 'username',
     passwordField: 'password',
     passReqToCallback: true
-}, async(req, email, password, done) => {
+}, async (req, username, password, done) => {
 
-    const user = await User.findOne({email: email});
-    if(user){
-        return done(null, false, req.flash('registerMessage', 'El email ya está registrado'));
-    }else{
-        const newUser = new User();
-        newUser.email = email;
-        newUser.password = newUser.hashear(password);
-        await newUser.save();
-        done(null, newUser);
-    }  
+    const user = await User.findOne({ username: username });
+    if (user) {
+        return done(null, false, req.flash('registerMessage', 'El usuario ya está registrado'));
+    } else {
+        const user = await User.findOne({ email: req.body.email });
+        if (user) {
+            return done(null, false, req.flash('registerMessage', 'El correo ya está registrado'));
+        } else {
+            console.log(req.body)
+            const newUser = new User();
+            newUser.username = username;
+            newUser.password = newUser.hashear(password);
+            newUser.email = req.body.email;
+            newUser.name = req.body.name;
+            newUser.lastname = req.body.lastname;
+            newUser.phone = req.body.phone;
+            newUser.dni = req.body.dni;
+            newUser.direccion = req.body.direccion;
+            newUser.esTecnico = req.body.esTecnico;
+            newUser.especialidad = req.body.especialidad;
+            await newUser.save();
+            done(null, newUser);
+        }
+    }
+
+
 }));
 
 passport.use('local-login', new LocalStrategy({
-    usernameField: 'email',
+    usernameField: 'username',
     passwordField: 'password',
     passReqToCallback: true
-}, async(req, email, password, done) => {
+}, async (req, username, password, done) => {
 
-    const user = await User.findOne({email: email});
-    if(!user){
-        return done(null, false, req.flash('loginMessage', 'Correo no registrado'))
+    const user = await User.findOne({ username: username });
+    if (!user) {
+        return done(null, false, req.flash('loginMessage', 'Usuario no registrado'))
     }
-    if(!user.compararPW(password)){
+    if (!user.compararPW(password)) {
         return done(null, false, req.flash('loginMessage', 'Contraseña incorrecta'))
     }
     done(null, user);

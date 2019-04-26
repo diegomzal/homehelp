@@ -1,5 +1,15 @@
 <%- layout('layouts/main.ejs') %>
 
+<script>
+    function habEsp(){
+        if(document.getElementById("checkEsp").checked){
+            document.getElementById("textEsp").disabled = false;
+        }else{
+            document.getElementById("textEsp").disabled = true;
+        }
+    }
+</script>
+
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <div class="card mt-4 text-center">
@@ -7,9 +17,23 @@
                 <div class="h3">Registrarse</div>
             </div>
             <div class="card-body">
-                <form action="/signup" method="POST">
-                    <div class="form-group"><input type="email" name="email" placeholder="Ingresa correo" class="form-control"></div>
+                <form action="/registrarse" method="POST">
+                    <div class="form-group"><input type="text" name="username" placeholder="Ingresa usuario" class="form-control"></div>
                     <div class="form-group"><input type="password" name="password" placeholder="Ingresa contraseña" class="form-control"></div>
+                    <div class="form-group"><input type="email" name="email" placeholder="Ingresa correo" class="form-control"></div>
+                    <div class="form-group"><input type="text" name="name" placeholder="Ingresa nombre" class="form-control"></div>
+                    <div class="form-group"><input type="text" name="lastname" placeholder="Ingresa apellido" class="form-control"></div>
+                    <div class="form-group"><input type="text" name="phone" placeholder="Ingresa numero" class="form-control"></div>
+                    <div class="form-group"><input type="text" name="dni" placeholder="Ingresa dni" class="form-control"></div>  
+                    <div class="form-group"><input type="text" name="direccion" placeholder="Ingresa direccion" class="form-control"></div> 
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" name="esTecnico" aria-label="esTecnico" id="checkEsp" onchange="habEsp()">      
+                            </div>
+                        </div>  
+                        <input type="text" class="form-control" name="especialidad" placeholder="Ingrese especialidad" id="textEsp" disabled>    
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block mt-4">
                         Registrar
                     </button>
