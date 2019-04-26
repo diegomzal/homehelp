@@ -38,8 +38,6 @@ app.use((req, res, next) => {
 
 // Rutas
 app.use('/', require('./routes/index'))
-app.use('/clientes',require('./routes/clientes'))
-app.use('/tecnicos', require('/routes/tecnicos'))
 
 //Empezar SV
 app.listen(app.get('port'), () => {
