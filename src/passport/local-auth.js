@@ -54,10 +54,10 @@ passport.use('local-login', new LocalStrategy({
 
     const user = await User.findOne({ username: username });
     if (!user) {
-        return done(null, false, req.flash('loginMessage', 'Usuario no registrado'))
+        return done(null, false, req.flash('loginMessage', 'Usuario o contraseña incorrectos'))
     }
     if (!user.compararPW(password)) {
-        return done(null, false, req.flash('loginMessage', 'Contraseña incorrecta'))
+        return done(null, false, req.flash('loginMessage', 'Usuario o contraseña incorrectos'))
     }
     done(null, user);
 

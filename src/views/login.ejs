@@ -1,40 +1,31 @@
 <%- layout('layouts/main.ejs') %>
 
+
 <div class="row">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-7 offset-md-3">
         <div class="card mt-4 text-center">
             <div class="card-header">
                 <div class="h3">Ingresar</div>
             </div>
             <div class="card-body">
 
-                <form action="/login" method="POST">
+                <form action="/login" method="POST" class="needs-validation">
                     <div class="form-group row">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">Usuario: </label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                value="email@example.com">
+                        <label for="username" class="col-sm-3 col-form-label">Usuario: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="username" id="username" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label">Contraseña: </label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                        <label for="password" class="col-sm-3 col-form-label">Contraseña: </label>
+                        <div class="col-sm-8">
+                            <input type="password" name="password" class="form-control" required>
                         </div>
                     </div>
-                </form>
-
-
-
-                <form action="/login" method="POST">
-
-                    <div class="form-group"><label for="username" class="col-sm-2 col-form-label">Usuario:</label><input
-                            type="text" name="username" id="username" class="form-control"></div>
-                    <div class="form-group">Contraseña:<input type="password" name="password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block mt-4">
+                    <button type="submit" class="btn btn-primary mt-4">
                         Ingresar
                     </button>
+                </form>
                 </form>
             </div>
         </div>
