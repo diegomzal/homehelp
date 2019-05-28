@@ -20,11 +20,13 @@ app.set('port', process.env.PORT || 3000)
 //middleware
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
+
 app.use(session({
     secret: 'secretHHDMZ',
     resave: false,
     saveUninitialized: false
 }))
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
