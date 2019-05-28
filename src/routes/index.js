@@ -21,10 +21,20 @@ router.get('/login', (req, res, next) => {
     res.render('login');
 });
 
+router.get('/google', passport.authenticate('google-register', {
+    scope: ['profile', 'email']
+}))
+
+//Callback para redirigir auth de google
+router.get('/google/redirect', passport.authenticate('google-register', {
+    successRedirect: '/perfil',
+    failureRedirect: '/login'
+}))
+
 router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/perfil',
     failureRedirect: '/login',
-    passReqToCallback: true
+    passReqToCallback: true 
 }))
 
 router.get('/logout', (req, res, next) => {
@@ -42,5 +52,7 @@ function isAuthenticated(req, res, next){
     }
     res.redirect('/login')
 }
+
+
 
 module.exports = router;
