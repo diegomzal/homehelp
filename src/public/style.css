@@ -5,3 +5,96 @@
     background-attachment: fixed;
     background-size: cover;
 }
+
+
+.logo-homehelp{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo-homehelp .imglogo{
+    display: block;
+    margin: auto;
+}
+
+.inputHH{
+    border: none;
+    border-bottom: 1px solid rgb(137,192,205);
+    background-color: transparent !important;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    background-size: 30px;
+    margin-bottom: 30px;
+}
+
+.inputHH::placeholder{
+    color: rgb(115,183,191);
+}
+
+.inputUser{
+    background-image: url('image/icono\ username.png');
+}
+
+.inputPass{
+    background-image: url('image/icono\ contrasena.png')
+}
+
+.inputNombre{
+    background-image: url('image/icono\ usuario.png')
+}
+
+.inputCorreo{
+    background-image: url('image/icono\ correo.png')
+}
+
+.inputTelefono{
+    background-image: url('image/icono\ telefono.png')
+}
+
+.inputdni{
+    background-image: url('image/icono\ dni.png')
+}
+
+.inputDireccion{
+    background-image: url('image/icono\ direccion.png')
+}
+
+.checkboxHH{
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0.5rem 1.1rem;
+    margin-bottom: 0;
+    font-size: 1.063rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 0.25rem;
+    border: 1px solid rgb(137,192,205);
+}
+
+
+.botonEntrarHH{
+    background-color: mediumturquoise;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 100px;
+    width: 100%;
+}
+
+
+
+@media screen and (max-width: 800px) {
+    .logo-homehelp .imglogo{
+        width: 100%;
+    }
+  }
