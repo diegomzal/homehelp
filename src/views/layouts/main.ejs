@@ -22,6 +22,11 @@
 <body class="bodyClass">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #ffffff00 !important">
+            <% if (user) {%>
+            <a class="navbar-brand" href="/">
+                    <img src="image/logo.png" height="40" alt="">
+                  </a>
+                  <% } %>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="menuMovil()">
             <span class="navbar-toggler-icon"></span>
@@ -30,13 +35,13 @@
             <ul class="navbar-nav ml-auto">
                 <% if (user) {%>
                 <li class="nav-item">
-                    <a class="nav-link" href="/perfil">Perfil</a>
+                    <a class="nav-link" href="/perfil" style="color: white;">Perfil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/mapa">Mapa Help</a>
+                    <a class="nav-link" href="/mapa" style="color: white;">Mapa Help</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" href="/logout" style="color: white;">Logout</a>
                 </li>
                 <% } else {%>
 
