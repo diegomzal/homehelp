@@ -52,6 +52,11 @@ router.get('/tecnicos', isAuthenticated, async(req, res, next) => {
     res.render('tecnicos', {tecnicos})
 })
 
+router.get('/clientes', isAuthenticated, async(req, res, next) => {
+    var clientes = await User.find({esTecnico: null})
+    res.render('clientes', {clientes})
+})
+
 function isAuthenticated(req, res, next){
     if(req.isAuthenticated()) {
         return next();

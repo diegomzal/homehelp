@@ -1,0 +1,15 @@
+<%- layout('layouts/main.ejs') %>
+
+<h1>Lista de Clientes</h1>
+
+<% if (clientes) {%>
+    <% clientes.forEach(function(cliente) { %>
+        <div class="col-md-4">
+            <div class="card card-body">
+                <h3><%= cliente.name %> <%= cliente.lastname %></h3>
+                <p><%= cliente.username %></p>
+            </div>
+        </div>
+        <%})%>
+
+<% } %>
