@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const passport = require('passport');
+const User = require('../models/user')
 
 router.get('/', (req, res, next) => {
     res.render('index');
@@ -44,6 +45,11 @@ router.get('/logout', (req, res, next) => {
 
 router.get('/perfil', isAuthenticated, (req, res, next) => {
     res.render('perfil');
+})
+
+router.get('/tecnicos', isAuthenticated, async(req, res, next) => {
+    var tecnicos = await User.find({esTecnico: "on"})
+    res.render('tecnicos', {tecnicos})
 })
 
 function isAuthenticated(req, res, next){

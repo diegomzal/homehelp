@@ -1,0 +1,16 @@
+<%- layout('layouts/main.ejs') %>
+
+<h1>Lista de técnicos</h1>
+
+<% if (tecnicos) {%>
+    <% tecnicos.forEach(function(tecnico) { %>
+        <div class="col-md-4">
+            <div class="card card-body">
+                <h3><%= tecnico.name %> <%= tecnico.lastname %></h3>
+                <p><%= tecnico.username %></p>
+                <p><%= tecnico.especialidad %></p>
+            </div>
+        </div>
+        <%})%>
+
+<% } %>
