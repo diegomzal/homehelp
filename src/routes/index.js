@@ -57,8 +57,9 @@ router.put('/perfil', async(req, res, next) => {
     res.render('perfil')
 })
 
-router.get('/mapa', isAuthenticated, (req, res, next) => {
-    res.render('mapa');
+router.get('/mapa', isAuthenticated, async(req, res, next) => {
+    var localizables = await User.find({lat: {$ne: null}})
+    res.render('mapa', {localizables});
 })
 
 router.get('/tecnicos', isAuthenticated, async(req, res, next) => {
