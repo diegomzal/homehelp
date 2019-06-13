@@ -47,6 +47,10 @@ router.get('/perfil', isAuthenticated, (req, res, next) => {
     res.render('perfil');
 })
 
+router.get('/mapa', isAuthenticated, (req, res, next) => {
+    res.render('mapa');
+})
+
 router.get('/tecnicos', isAuthenticated, async(req, res, next) => {
     var tecnicos = await User.find({esTecnico: "on"})
     res.render('tecnicos', {tecnicos})
