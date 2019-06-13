@@ -1,16 +1,27 @@
-<%- layout('layouts/main.ejs') %>
+<%- layout('layouts/perfilLayout.ejs') %>
 
-<h1>Mi Perfil</h1>
+<h1>Mi Perfil <% if (user.especialidad) {%> - Usuario tipo técnico <%}else{%> - Usuario tipo cliente <%}%></h1>
 
 <ul class="list-group">
-        <li class="list-group-item"><%= user.username %></li>
-        <li class="list-group-item"><%= user.email %></li>
-        <li class="list-group-item"><%= user.name %></li>
-        <li class="list-group-item"><%= user.lastname %></li>
-        <li class="list-group-item"><%= user.phone %></li>
-        <li class="list-group-item"><%= user.dni %></li>
-        <li class="list-group-item"><%= user.direccion %></li>
+        <li class="list-group-item"><img src="image/icono-username-b.png" width="30px"><%= user.username %></li>
+        <li class="list-group-item"><img src="image/icono-correo-b.png" width="30px"><%= user.email %></li>
+        <li class="list-group-item"><img src="image/icono-usuario-b.png" width="30px"><%= user.name %></li>
+        <li class="list-group-item"><img src="image/icono-usuario-b.png" width="30px"><%= user.lastname %></li>
+        <li class="list-group-item"><img src="image/icono-telefono-b.png" width="30px"><%= user.phone %></li>
+        <li class="list-group-item"><img src="image/icono-dni-b.png" width="30px"><%= user.dni %></li>
+        <li class="list-group-item"><img src="image/icono-direccion-b.png" width="30px"><%= user.direccion %></li>
 
-        <li class="list-group-item"><%= user.especialidad %></li>
-      </ul>
+        <% if (user.especialidad) {%>
+        <li class="list-group-item"><img src="image/icono-usuario-b.png" width="30px"><%= user.especialidad %></li>
+        <% } %>
+</ul>
+<br>
 
+      <% if (user.especialidad) {%>
+<h2>Técnico - Ubicación</h2>
+<button type="button" class="btn btn-primary btn-lg btn-block" onclick = "activarUbicacion()">Activar ubicación</button>
+<button type="button" class="btn btn-secondary btn-lg btn-block" onclick="desactivarUbicacion()">Desactivar ubicación</button>
+            <% if (user.lat) {%> 
+                  <h3>Compartiendo ubicación: <%= user.lat %>, <%= user.long%></h3>
+            <% } %>  
+      <% } %>  

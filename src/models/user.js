@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs')
 const { Schema } = mongoose;
+mongoose.set('useFindAndModify', false);
 
 const userSchema = new Schema({
     username: String,
@@ -12,7 +13,9 @@ const userSchema = new Schema({
     dni: String,
     direccion: String,
     esTecnico: String,
-    especialidad: String
+    especialidad: String,
+    lat: Number,
+    long: Number
 })
 
 userSchema.methods.hashear = (password) => {

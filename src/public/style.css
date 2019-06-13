@@ -36,31 +36,31 @@
 }
 
 .inputUser{
-    background-image: url('image/icono\ username.png');
+    background-image: url('image/icono-username.png');
 }
 
 .inputPass{
-    background-image: url('image/icono\ contrasena.png')
+    background-image: url('image/icono-contrasena.png')
 }
 
 .inputNombre{
-    background-image: url('image/icono\ usuario.png')
+    background-image: url('image/icono-usuario.png')
 }
 
 .inputCorreo{
-    background-image: url('image/icono\ correo.png')
+    background-image: url('image/icono-correo.png')
 }
 
 .inputTelefono{
-    background-image: url('image/icono\ telefono.png')
+    background-image: url('image/icono-telefono.png')
 }
 
 .inputdni{
-    background-image: url('image/icono\ dni.png')
+    background-image: url('image/icono-dni.png')
 }
 
 .inputDireccion{
-    background-image: url('image/icono\ direccion.png')
+    background-image: url('image/icono-direccion.png')
 }
 
 .checkboxHH{

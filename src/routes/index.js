@@ -47,6 +47,16 @@ router.get('/perfil', isAuthenticated, (req, res, next) => {
     res.render('perfil');
 })
 
+router.put('/perfil', async(req, res, next) => {
+    var lat = req.body.lat;
+    var long = req.body.long;
+
+    User.findOneAndUpdate({username: req.user.username}, {lat: lat, long: long}, function(err, doc){
+        if(err) return res.send(500, {error: err});
+    })
+    res.render('perfil')
+})
+
 router.get('/mapa', isAuthenticated, (req, res, next) => {
     res.render('mapa');
 })
