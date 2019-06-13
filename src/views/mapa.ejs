@@ -1,13 +1,17 @@
-<%- layout('layouts/main.ejs') %>
+<%- layout('layouts/perfilLayout.ejs') %>
     <div id="map" style="width: auto; height: 400px; border-style: double; position: relative; overflow: hidden;"></div>
 
     <script>
       var listaLoc = [{"lat":-12.084614, "long":-76.971516, "nombre": "John Doe", "especialidad": "test", "username": "john_doe"}]
-      //for(i = 0; i < parseInt('<%=localizables.length%>'); i++){
-       // listaLoc.push({"lat":'<%=localizables.lat%>', "long":'<%=localizables.long%>', "nombre": "'<%=localizables.nombre%>'", "especialidad": "'<%=localizables.especialidad%>'", "username": "'<%=localizables.username%>'"})
-      //}
 
-      
+      function contratar(persona){
+        var usuario = "<%= user.username %>"
+        $.ajax({
+                    url: '/mapa',
+                    type: 'PUT',
+                    data: "&cliente="+usuario+"&tecnico="+persona
+                })
+      }
 
       var map;
       function initMap() {
@@ -42,9 +46,13 @@
                               'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
       }
-
+      var usuarioAbierto = "";
+      function comprar(){
+          contratar(usuarioAbierto)
+          console.log(usuarioAbierto)
+      }
       function addMarker(location, nombre, especialidad, username) {
-        var texto = '<h4><b>' + nombre + '</b></h4></br><h5>' + especialidad + '</h5><button type="button" class="" onclick = "contratar("'+username+'")">Contratar</button>'
+        var texto = '<h4><b>' + nombre + '</b></h4></br><h5>' + especialidad + '</h5><button type="button" id="botonaso" onclick="comprar()">Contratar</button>'
         marker = new google.maps.Marker({
           position: location,
           map: map,
@@ -53,9 +61,11 @@
         infowindow = new google.maps.InfoWindow({
           content: texto
         })
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
+        google.maps.event.addListener( marker, 'click', function() {
+          infoWindow.setContent( texto );
+          infoWindow.open( map, this );
+          usuarioAbierto = username
+          });
       }
 
     

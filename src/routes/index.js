@@ -43,8 +43,9 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/');
 })
 
-router.get('/perfil', isAuthenticated, (req, res, next) => {
-    res.render('perfil');
+router.get('/perfil', isAuthenticated, async(req, res, next) => {
+    var pedidos = await User.find({us1: {$ne: null}})
+    res.render('perfil', {pedidos});
 })
 
 router.put('/perfil', async(req, res, next) => {
@@ -55,6 +56,21 @@ router.put('/perfil', async(req, res, next) => {
         if(err) return res.send(500, {error: err});
     })
     res.render('perfil')
+})
+
+router.put('/mapa', async(req, res, next) => {
+
+    var cliente = req.body.cliente;
+    var tecnico = req.body.tecnico;
+
+    console.log(cliente)
+    const newUser = new User();
+    newUser.us1 = cliente;
+    newUser.us2 = tecnico;
+    await newUser.save();
+
+    res.send("enviado")
+
 })
 
 router.get('/mapa', isAuthenticated, async(req, res, next) => {

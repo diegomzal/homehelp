@@ -24,4 +24,19 @@
             <% if (user.lat) {%> 
                   <h3>Compartiendo ubicación: <%= user.lat %>, <%= user.long%></h3>
             <% } %>  
+
+
+      <h2>Pedidos de clientes</h2>
+                  <ul class="list-group">
+                        <% pedidos.forEach(function(pedido) { %>
+                              <% if(pedido.us2 == user.username) { %>
+                        <li class="list-group-item">Pedido de: <%= pedido.us1 %></li>
+                        <li class="list-group-item">Pedido a: <%= pedido.us2 %></li>
+                        <li class="list-group-item">---</li>
+                                    
+                              <% }}) %>
+                  </ul>
       <% } %>  
+
+
+
