@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const passport = require('passport');
-const User = require('../models/user')
+const User = require('../models/user');
+const Service = require('../models/service')
 
 router.get('/', (req, res, next) => {
     res.render('index');
@@ -44,7 +45,7 @@ router.get('/logout', (req, res, next) => {
 })
 
 router.get('/perfil', isAuthenticated, async(req, res, next) => {
-    var pedidos = await User.find({us1: {$ne: null}})
+    var pedidos = await Service.find({pedidoDe: {$ne: null}})
     res.render('perfil', {pedidos});
 })
 
@@ -62,15 +63,17 @@ router.put('/mapa', async(req, res, next) => {
 
     var cliente = req.body.cliente;
     var tecnico = req.body.tecnico;
+    var telefono = req.body.numero;
 
     console.log(cliente)
-    const newUser = new User();
-    newUser.us1 = cliente;
-    newUser.us2 = tecnico;
-    await newUser.save();
+    const newService = new Service();
+    newService.pedidoDe = cliente;
+    newService.pedidoA = tecnico;
+    newService.telefono = telefono;
+    newService.status = "requested"
+    await newService.save();
 
-    res.send("enviado")
-
+    res.send('enviado')
 })
 
 router.get('/mapa', isAuthenticated, async(req, res, next) => {
@@ -88,11 +91,24 @@ router.get('/clientes', isAuthenticated, async(req, res, next) => {
     res.render('clientes', {clientes})
 })
 
+router.get('/setfoto', isAuthenticated, (req, res, next) => {
+    res.render('setfoto')
+})
+
+router.post('/setfoto', async(req, res, next) => {
+    var tecUrl = req.body.urlTec;
+    console.log(tecUrl)
+    User.findOneAndUpdate({username: req.user.username},{foto: tecUrl}, function(err, doc){
+        if(err) return res.send(500, {error: err});
+    })
+    await res.render('setfoto')
+})
+
 function isAuthenticated(req, res, next){
     if(req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/login')
+    res.redirect('../login')
 }
 
 

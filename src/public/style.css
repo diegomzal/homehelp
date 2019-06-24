@@ -94,6 +94,10 @@
     width: 100%;
 }
 
+.fotoTecMapa{
+    width:100px !important; 
+    height: auto !important;  
+}
 
 
 @media screen and (max-width: 800px) {

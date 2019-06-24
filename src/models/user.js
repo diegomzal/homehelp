@@ -16,8 +16,9 @@ const userSchema = new Schema({
     especialidad: String,
     lat: Number,
     long: Number,
-    us1: String,
-    us2: String
+    pedidoDe: String,
+    pedidoA: String,
+    foto: String
 })
 
 userSchema.methods.hashear = (password) => {

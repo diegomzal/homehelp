@@ -1,0 +1,19 @@
+<%- layout('layouts/main.ejs') %>
+<br>
+<h1>Elegir imagen</h1>
+
+<% if (user.foto) { %>
+
+    <h3>Tienes una foto actualmente:</h3>
+    <img src="<%=user.foto %>" alt="Tu foto!" width="auto" height="200px">
+
+ <% } %>   
+<br>
+<br>
+<form action="/setfoto" method="POST">
+    <div class="form-group">
+        <label for="urlImagen">Cambiar imagen: </label>
+        <input type="text" class="form-control" id="urlImagen" name="urlTec" placeholder="Pegar URL imagen aquí">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

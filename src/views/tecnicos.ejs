@@ -1,18 +1,35 @@
 <%- layout('layouts/main.ejs') %>
 
+<br>
 <h1>Lista de técnicos</h1>
 
 <% if (tecnicos) {%>
-    <% tecnicos.forEach(function(tecnico) { %>
-        <div class="col-md-4">
-            <div class="card card-body">
-                <h3><%= tecnico.name %> <%= tecnico.lastname %></h3>
-                <p><%= tecnico.username %></p>
-                <p><%= tecnico.especialidad %></p>
-                <p><%= tecnico.lat %></p>
-                <p><%= tecnico.long %></p>
-            </div>
-        </div>
-        <%})%>
+
+    <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Ubicación</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% tecnicos.forEach(function(tecnico) { %>
+                <tr>
+                    <th scope="row"><%= tecnico.username %></th>
+                    <td><%= tecnico.name %></td>
+                    <td><%= tecnico.lastname %></td>
+                    <td><%= tecnico.especialidad %></td>
+                    <% if (tecnico.lat) { %>
+                        <td><div style="color:greenyellow">Comparte ubicación</div></td>
+                    <% }else{ %>  
+                        <td><div style="color:red">No comparte ubicación</div></td>
+                    <% } %>    
+                </tr>
+            <%})%>         
+        </tbody>
+      </table>
 
 <% } %>

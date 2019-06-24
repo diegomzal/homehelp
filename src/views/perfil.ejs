@@ -1,5 +1,5 @@
 <%- layout('layouts/perfilLayout.ejs') %>
-
+<br>
 <h1>Mi Perfil <% if (user.especialidad) {%> - Usuario tipo técnico <%}else{%> - Usuario tipo cliente <%}%></h1>
 
 <ul class="list-group">
@@ -12,31 +12,60 @@
         <li class="list-group-item"><img src="image/icono-direccion-b.png" width="30px"><%= user.direccion %></li>
 
         <% if (user.especialidad) {%>
-        <li class="list-group-item"><img src="image/icono-usuario-b.png" width="30px"><%= user.especialidad %></li>
+        <li class="list-group-item"><img src="image/icono-usuario-b.png" width="30px"><%= user.especialidad %></li>  
+        <li class="list-group-item">
+            <% if(user.foto) {%>
+                  Tu perfil tiene una foto - 
+            <% }else{ %>
+                  Tu perfil no tiene foto! -
+            <% } %>     
+            <a href="/setfoto">Elegir foto</a>
+      </li>
         <% } %>
 </ul>
 <br>
 
-      <% if (user.especialidad) {%>
+<% if (user.especialidad) {%>
 <h2>Técnico - Ubicación</h2>
 <button type="button" class="btn btn-primary btn-lg btn-block" onclick = "activarUbicacion()">Activar ubicación</button>
 <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="desactivarUbicacion()">Desactivar ubicación</button>
+<br>
             <% if (user.lat) {%> 
-                  <h3>Compartiendo ubicación: <%= user.lat %>, <%= user.long%></h3>
-            <% } %>  
-
-
+                  <h3>Compartiendo ubicación: <div style="color:greenyellow">ACTIVADO</div></h3>
+            <% } else { %>  
+                  <h3>Compartiendo ubicación: <div style="color:red">DESACTIVADO</div></h3>
+            <% } %>      
+<br>
+<br>
+      <% if (pedidos.length > 0) { %>
       <h2>Pedidos de clientes</h2>
-                  <ul class="list-group">
-                        <% pedidos.forEach(function(pedido) { %>
-                              <% if(pedido.us2 == user.username) { %>
-                        <li class="list-group-item">Pedido de: <%= pedido.us1 %></li>
-                        <li class="list-group-item">Pedido a: <%= pedido.us2 %></li>
-                        <li class="list-group-item">---</li>
-                                    
-                              <% }}) %>
-                  </ul>
+      <table class="table table-dark">
+            <thead>
+                  <tr>
+                  <th scope="col">Pedido de</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Número</th>
+                  <th scope="col">Acción</th>
+                  </tr>
+            </thead>
+            <tbody>
+                  <% pedidos.forEach(function(pedido) { %>
+                  <% if(pedido.pedidoA == user.username) { %>
+                        <tr>
+                        <td><%= pedido.pedidoDe %></td>
+                        <td><%= pedido.status %></td>
+                        <td><%= pedido.telefono %></td>
+                        <td><a class="btn btn-primary">Test</a></td>
+                        </tr>
+                  <% }}) %>       
+            </tbody>
+      </table>
+
       <% } %>  
+<% } %>  
+
+<br> 
+<br>
 
 
 
