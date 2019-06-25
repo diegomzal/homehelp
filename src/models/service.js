@@ -6,7 +6,8 @@ const serviceSchema = new Schema({
     pedidoDe: String,
     pedidoA: String,
     telefono: Number,
-    status: String
+    status: String,
+    id: String
 })
 
 module.exports = mongoose.model('services', serviceSchema)

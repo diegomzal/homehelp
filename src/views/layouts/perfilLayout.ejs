@@ -16,10 +16,26 @@
                 document.getElementById("navbarNav").className = "collapse navbar-collapse"
             }
         }
+        function eliminar(id){
+            $.ajax({
+                url: '/perfil/eliminarPedido',
+                type: 'PUT',
+                data: "id=" + id
+            })
+            alert("El pedido ha sido eliminado")
+        }
+        function aceptar(id){
+            $.ajax({
+                url: '/perfil/aceptarPedido',
+                type: 'PUT',
+                data: "id=" + id
+            })
+            alert("El pedido ha sido aceptado. Se moverá a su historial de servicios.")
+        }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYvkIeO2BKYP5R46ljTG0qTJFDuAZA1eA&callback=initMap"
     async defer></script>
-    <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script>
         function activarUbicacion(){
             infoWindow = new google.maps.InfoWindow;
@@ -64,8 +80,7 @@
                     <img src="image/logo.png" height="40" alt="">
                   </a>
                   <% } %>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="menuMovil()">
+        <button class="navbar-toggler eliminar" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -78,11 +93,17 @@
                     <a class="nav-link" href="/mapa" style="color: white;">Mapa Help</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/pedidos" style="color: white;">Mis pedidos</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/tecnicos" style="color: white;">Ver técnicos</a>
                 </li>
                 <% if (user.especialidad) {%>
                 <li class="nav-item">
                     <a class="nav-link" href="/clientes" style="color: white;">Ver clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/servicios" style="color: white;">Mis servicios aceptados</a>
                 </li>
                 <% } %>
                 <li class="nav-item">

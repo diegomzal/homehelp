@@ -49,7 +49,7 @@ router.get('/perfil', isAuthenticated, async(req, res, next) => {
     res.render('perfil', {pedidos});
 })
 
-router.put('/perfil', async(req, res, next) => {
+router.put('/perfil', isAuthenticated, async(req, res, next) => {
     var lat = req.body.lat;
     var long = req.body.long;
 
@@ -59,7 +59,58 @@ router.put('/perfil', async(req, res, next) => {
     res.render('perfil')
 })
 
-router.put('/mapa', async(req, res, next) => {
+router.put('/perfil/eliminarPedido', isAuthenticated, async(req, res, next) => {
+    var id = req.body.id;
+    Service.findOneAndDelete({id: id},function(err,doc){
+        if(err) return res.send(500, {error: err})
+    })
+    res.send('eliminado')
+})
+
+router.put('/perfil/aceptarPedido', isAuthenticated, async(req, res, next) => {
+    var id = req.body.id;
+    Service.findOneAndUpdate({id: id},{status: "aceptada"},function(err, doc){
+        if(err) return res.send(500, {error: err});
+    })
+    await res.send('aceptado')
+})
+
+router.get('/pedidos', isAuthenticated, async(req, res, next) => {
+    var pedidos = await Service.find({pedidoDe: {$ne: null}})
+    res.render('pedidos', {pedidos});
+})
+
+
+router.get('/servicios', isAuthenticated, async(req, res, next) => {
+    var pedidos = await Service.find({pedidoDe: {$ne: null}})
+    res.render('servicios', {pedidos});
+})
+
+router.put('/servicios/cancelarServicio', isAuthenticated, async(req, res, next) => {
+    var id = req.body.id;
+    Service.findOneAndUpdate({id: id},{status: "cancelada"},function(err, doc){
+        if(err) return res.send(500, {error: err});
+    })
+    await res.send('cancelado')
+})
+
+router.put('/servicios/terminarServicio', isAuthenticated, async(req, res, next) => {
+    var id = req.body.id;
+    Service.findOneAndUpdate({id: id},{status: "terminada"},function(err, doc){
+        if(err) return res.send(500, {error: err});
+    })
+    await res.send('terminada')
+})
+
+router.put('/servicios/eliminarServicio', isAuthenticated, async(req, res, next) => {
+    var id = req.body.id;
+    Service.findOneAndDelete({id: id},function(err, doc){
+        if(err) return res.send(500, {error: err});
+    })
+    await res.send('eliminado')
+})
+
+router.put('/mapa', isAuthenticated, async(req, res, next) => {
 
     var cliente = req.body.cliente;
     var tecnico = req.body.tecnico;
@@ -70,7 +121,9 @@ router.put('/mapa', async(req, res, next) => {
     newService.pedidoDe = cliente;
     newService.pedidoA = tecnico;
     newService.telefono = telefono;
-    newService.status = "requested"
+    newService.status = "requested";
+    newService.id = new Date().getTime()+cliente+tecnico;
+    console.log(newService.id)
     await newService.save();
 
     res.send('enviado')
@@ -95,7 +148,7 @@ router.get('/setfoto', isAuthenticated, (req, res, next) => {
     res.render('setfoto')
 })
 
-router.post('/setfoto', async(req, res, next) => {
+router.post('/setfoto', isAuthenticated, async(req, res, next) => {
     var tecUrl = req.body.urlTec;
     console.log(tecUrl)
     User.findOneAndUpdate({username: req.user.username},{foto: tecUrl}, function(err, doc){

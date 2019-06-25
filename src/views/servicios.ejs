@@ -1,0 +1,39 @@
+<%- layout('layouts/pedidosLayout.ejs') %>
+
+<br>
+<h1>Historial de servicios aceptados</h1>
+
+<table class="table table-dark">
+        <thead>
+              <tr>
+              <th scope="col">Pedido de</th>
+              <th scope="col">Status</th>
+              <th scope="col">Número</th>
+              <th scope="col">Acción</th>              
+              <th scope="col">Cancelar</th>
+              </tr>
+        </thead>
+        <tbody>
+              <% pedidos.forEach(function(pedido) { %>
+              <% if(pedido.pedidoA == user.username && (pedido.status == 'aceptada' || pedido.status == 'terminada')) { %>
+                    <tr>
+                    <td><%= pedido.pedidoDe %></td>
+                    <td><%= pedido.status %></td>
+                    <td><%= pedido.telefono %></td>
+                    
+                    <% if(pedido.status == 'aceptada') { %>
+                        <td><a class="btn btn-primary aceptar" onclick="terminarServicio('<%= pedido.id %>')">Terminar servicio</a></td>
+                    <% }else if(pedido.status == 'terminada'){ %>
+                        <td>Esperando pago...</td>
+                    <% }else{ %>
+                        <td>Servicio pagado!</td>
+                    <% } %>
+                    <% if(pedido.status == 'aceptada' || pedido.status == 'terminada'){ %>
+                    <td><a class="btn btn-danger red eliminar" onclick="cancelarServicio('<%= pedido.id %>')">Cancelar Servicio</a></td>
+                    <% } else { %>
+                    <td><a class="btn btn-danger red eliminar" onclick="eliminarServicio('<%= pedido.id %>')">Eliminar Servicio</a></td> 
+                    <% } %> 
+                    </tr>
+              <% }}) %>       
+        </tbody>
+  </table>

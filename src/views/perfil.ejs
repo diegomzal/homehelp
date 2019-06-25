@@ -38,24 +38,24 @@
 <br>
 <br>
       <% if (pedidos.length > 0) { %>
-      <h2>Pedidos de clientes</h2>
+      <h2>Pedidos pendientes de clientes</h2>
       <table class="table table-dark">
             <thead>
                   <tr>
                   <th scope="col">Pedido de</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Número</th>
                   <th scope="col">Acción</th>
+                  <th scope="col">Cancelar</th>
                   </tr>
             </thead>
             <tbody>
                   <% pedidos.forEach(function(pedido) { %>
-                  <% if(pedido.pedidoA == user.username) { %>
+                  <% if(pedido.pedidoA == user.username && pedido.status == "requested") { %>
                         <tr>
                         <td><%= pedido.pedidoDe %></td>
                         <td><%= pedido.status %></td>
-                        <td><%= pedido.telefono %></td>
-                        <td><a class="btn btn-primary">Test</a></td>
+                        <td><a class="btn btn-primary aceptar" onclick="aceptar('<%= pedido.id %>')">Aceptar</a></td>
+                        <td><a class="btn btn-danger red eliminar" onclick="eliminar('<%= pedido.id %>')">Cancelar Servicio</a></td>
                         </tr>
                   <% }}) %>       
             </tbody>

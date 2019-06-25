@@ -1,0 +1,34 @@
+<%- layout('layouts/pedidosLayout.ejs') %>
+
+<br>
+<h1>Historial de Pedidos activos</h1>
+
+<table class="table table-dark">
+        <thead>
+              <tr>
+              <th scope="col">Pedido a</th>
+              <th scope="col">Status</th>
+              <th scope="col">Acción</th>
+              <th scope="col">Cancelar</th>
+              </tr>
+        </thead>
+        <tbody>
+              <% pedidos.forEach(function(pedido) { %>
+              <% if(pedido.pedidoDe == user.username) { %>
+                    <tr>
+                    <td><%= pedido.pedidoA %></td>
+                    <td><%= pedido.status %></td>
+                    <% if(pedido.status == 'aceptada') { %>
+                        <td>Por favor, esperar llamada del tecnico</td>
+                    <% }else if(pedido.status == 'terminada'){ %>
+                        <td><a class="btn btn-danger" onclick="pagarServicio('<%= pedido.id %>')">Pagar</a></td>
+                    <% }else if(pedido.status == 'pagada'){ %>
+                        <td><a class="btn btn-danger" onclick="valorarServicio('<%= pedido.id %>')">Valorar</a></td>
+                    <% }else if(pedido.status == 'requested') {%>
+                    <td>Esperar a que el tecnico acepte su request.</td>
+                    <% } %>
+                    <td><a class="btn btn-danger red eliminar" onclick="eliminarServicio('<%= pedido.id %>')">Eliminar Servicio</a></td> 
+                    </tr>
+              <% }}) %>       
+        </tbody>
+  </table>

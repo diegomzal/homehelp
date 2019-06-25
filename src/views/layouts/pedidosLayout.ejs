@@ -16,7 +16,41 @@
                 document.getElementById("navbarNav").className = "collapse navbar-collapse"
             }
         }
+        function eliminarPedido(id){
+            $.ajax({
+                url: '/pedidos/eliminarPedido',
+                type: 'PUT',
+                data: "id=" + id
+            })
+            alert("El pedido ha sido eliminado")
+        }
+        function eliminarServicio(id){
+            $.ajax({
+                url: '/servicios/eliminarServicio',
+                type: 'PUT',
+                data: "id=" + id
+            })
+            alert("El servicio ha sido eliminado")
+        }
+        function terminarServicio(id){
+            $.ajax({
+                url: '/servicios/terminarServicio',
+                type: 'PUT',
+                data: "id=" + id
+            })
+            alert("El servicio ha sido terminado.")
+        }
+        function cancelarServicios(id){
+            $.ajax({
+                url: '/servicios/cancelarServicio',
+                type: 'PUT',
+                data: "id=" + id
+            })
+            alert("El servicio ha sido cancelado.")
+        }
+
     </script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     
 </head>
 
@@ -28,8 +62,7 @@
                     <img src="image/logo.png" height="40" alt="">
                   </a>
                   <% } %>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="menuMovil()">
+        <button class="navbar-toggler eliminar" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
