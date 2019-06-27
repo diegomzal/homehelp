@@ -3,7 +3,9 @@ const router = express.Router();
 
 const passport = require('passport');
 const User = require('../models/user');
-const Service = require('../models/service')
+const Service = require('../models/service');
+const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
+const payPalClient = require('../paypal');
 
 router.get('/', (req, res, next) => {
     res.render('index');
@@ -95,12 +97,13 @@ router.put('/servicios/cancelarServicio', isAuthenticated, async(req, res, next)
     await res.send('cancelado')
 })
 
-router.put('/servicios/terminarServicio', isAuthenticated, async(req, res, next) => {
+router.put('/servicios/facturarServicio', isAuthenticated, (req, res, next) => {
     var id = req.body.id;
-    Service.findOneAndUpdate({id: id},{status: "terminada"},function(err, doc){
+    var monto = req.body.monto;
+    Service.findOneAndUpdate({id: id},{status: "terminada", amount: monto},function(err, doc){
         if(err) return res.send(500, {error: err});
     })
-    await res.send('terminada')
+    res.send('facturado')
 })
 
 router.put('/servicios/eliminarServicio', isAuthenticated, async(req, res, next) => {
@@ -109,6 +112,26 @@ router.put('/servicios/eliminarServicio', isAuthenticated, async(req, res, next)
         if(err) return res.send(500, {error: err});
     })
     await res.send('eliminado')
+})
+
+router.post('/paypal-transaction-complete', isAuthenticated, async(req, res, next) => {
+    const orderID = req.body.orderID;
+    const pedidoID = req.body.pedidoID;
+    console.log(orderID)
+    console.log(pedidoID)
+    let request = new checkoutNodeJssdk.orders.OrdersGetRequest(orderID);
+    let order;
+    try {
+        order = await payPalClient.client().execute(request);
+    } catch (err) {
+        console.error(err);
+        return res.send(500);
+    }
+    Service.findOneAndUpdate({id: pedidoID},{status: "pagada"},function(err, doc){
+        if(err) return res.send(500, {error: err});
+    })
+
+    res.send(200);
 })
 
 router.put('/mapa', isAuthenticated, async(req, res, next) => {

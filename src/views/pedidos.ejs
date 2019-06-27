@@ -20,46 +20,46 @@
                 
               <% pedidos.forEach(function(pedido) { %>
               <% if(pedido.pedidoDe == user.username) { %>
-                    <script>
-                        paypal.Buttons({
-                            style: {
-                                layout: 'horizontal',
-                                tagline: false
-                            },
-                            createOrder: function(data,actions){
-                                return actions.order.create({
-                                    purchase_units: [{
-                                        amount: {
-                                            value: '<%= pedido.amount %>'
-                                        }
-                                    }]
-                                });
-                            },
-                            onApprove: function(data, actions){
-                                return actions.order.capture().then(function(details){
-                                    alert("Transacción completada por" + details.payer.name.given_name);
-
-                                    return fetch('/paypal-transaction-complete', {
-                                        method: 'post',
-                                        headers: {
-                                            'content-type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            orderID: data.orderID
-                                        })
-                                    });
-                                });
-                            }
-                        }).render('#paypal-button-container');
-                      </script>
+                    
                     <tr>
                     <td><%= pedido.pedidoA %></td>
-                    <td><%= pedido.amount %>$</td>
+                    <% if(pedido.status == 'aceptada' || pedido.status == 'requested') { %>
+                    <td><%= pedido.amount %>$ la hora</td>
+                    <% }else{ %>
+                    <td><%= pedido.amount %>$</td>   
+                    <% } %> 
                     <td><%= pedido.status %></td>
                     <% if(pedido.status == 'aceptada') { %>
                         <td>Por favor, esperar llamada del tecnico</td>
                     <% }else if(pedido.status == 'terminada'){ %>
-                        <td><div onclick="pagarPedido('<%= pedido.id %>', '<%= pedido.amount %>')" id="paypal-button-container"></div></td>
+                        <script>
+                                paypal.Buttons({
+                                    style: {
+                                        layout: 'horizontal',
+                                        tagline: false
+                                    },
+                                    createOrder: function(data,actions){
+                                        return actions.order.create({
+                                            purchase_units: [{
+                                                amount: {
+                                                    value: '<%= pedido.amount %>'
+                                                }
+                                            }]
+                                        });
+                                    },
+                                    onApprove: function(data, actions){
+                                        return actions.order.capture().then(function(details){
+                                            alert("Transacción completada por " + details.payer.name.given_name);                                    
+                                            $.ajax({
+                                                url: '/paypal-transaction-complete',
+                                                type: 'POST',
+                                                data: "orderID=" + data.orderID + "&pedidoID=" + '<%= pedido.id %>'
+                                            })                                 
+                                        });
+                                    }
+                                }).render('#paypal-button-container');
+                              </script>
+                        <td><div id="paypal-button-container"></div></td>
                     <% }else if(pedido.status == 'pagada'){ %>
                         <td><a class="btn btn-danger" onclick="valorarPedido('<%= pedido.id %>')">Valorar</a></td>
                     <% }else if(pedido.status == 'requested') {%>

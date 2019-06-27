@@ -12,6 +12,7 @@ require('./database');
 require('./passport/local-auth');
 require('./passport/google-auth');
 
+
 //Configuración
 app.set('views', path.join(__dirname, 'views'))
 app.engine('ejs', engine);

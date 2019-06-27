@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HOME HELP</title>
-    <link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
         function menuMovil() {
             if (document.getElementById("navbarNav").className == "collapse navbar-collapse") {
@@ -34,15 +36,15 @@
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYvkIeO2BKYP5R46ljTG0qTJFDuAZA1eA&callback=initMap"
-    async defer></script>
+    async defer></script>   
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script>
         function activarUbicacion(){
             monto = document.getElementById("montoid").value
             if(isNaN(monto)){
                 alert("Ingrese solo numeros")
-            }else if(monto < 10){
-                alert("Monto debe ser mayor a 10!")
+            }else if(monto <= 0){
+                alert("Monto debe ser mayor a 0!")
             }else{
                 infoWindow = new google.maps.InfoWindow;
                 var pos = 2;
@@ -142,6 +144,7 @@
         <%- body %>
     </div>
 
+   
 </body>
 
 </html>
