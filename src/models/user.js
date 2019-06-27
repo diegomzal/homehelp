@@ -18,7 +18,8 @@ const userSchema = new Schema({
     long: Number,
     pedidoDe: String,
     pedidoA: String,
-    foto: String
+    foto: String,
+    amount: Number
 })
 
 userSchema.methods.hashear = (password) => {

@@ -21,6 +21,16 @@
             <% } %>     
             <a href="/setfoto">Elegir foto</a>
       </li>
+      <li class="list-group-item">
+
+            <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="monto de servicio" aria-label="monto de servicio" aria-describedby="basic-addon2" id="montoid">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">$ x servicio</span>
+                  </div>
+                </div>
+
+      </li>
         <% } %>
 </ul>
 <br>
@@ -31,7 +41,7 @@
 <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="desactivarUbicacion()">Desactivar ubicación</button>
 <br>
             <% if (user.lat) {%> 
-                  <h3>Compartiendo ubicación: <div style="color:greenyellow">ACTIVADO</div></h3>
+                  <h3>Compartiendo ubicación: <div style="color:greenyellow">ACTIVADO</div><%= user.amount %>$</h3>
             <% } else { %>  
                   <h3>Compartiendo ubicación: <div style="color:red">DESACTIVADO</div></h3>
             <% } %>      

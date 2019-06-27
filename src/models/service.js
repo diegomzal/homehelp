@@ -7,7 +7,8 @@ const serviceSchema = new Schema({
     pedidoA: String,
     telefono: Number,
     status: String,
-    id: String
+    id: String,
+    amount: Number
 })
 
 module.exports = mongoose.model('services', serviceSchema)

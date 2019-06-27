@@ -10,7 +10,7 @@
         $.ajax({
                     url: '/mapa',
                     type: 'PUT',
-                    data: "&cliente="+usuario+"&tecnico="+persona+"&numero="+telefono
+                    data: "&cliente="+usuario+"&tecnico="+persona+"&numero="+telefono+"&amount="+monto
                 })
       }
 
@@ -48,16 +48,17 @@
         infoWindow.open(map);
       }
       var usuarioAbierto = "";
+      var monto = 0;
       function comprar(){
-          contratar(usuarioAbierto)
-          alert('Ha contratado a '+ usuarioAbierto)
+          contratar(usuarioAbierto, monto)
+          alert('Ha contratado a '+ usuarioAbierto + ' por $' + monto)
           console.log(usuarioAbierto)
       }
-      function addMarker(location, nombre, especialidad, username, foto) {
+      function addMarker(location, nombre, especialidad, username, foto, montoo) {
         //var texto = '<h4><b>' + nombre + '</b></h4></br><h5>' + especialidad + '</h5><button type="button" id="botonaso" onclick="comprar()">Contratar</button>'
         var texto = '<div class="card" style="width: 10rem;"><img src="' + foto
           + '" class="card-img-top fotoTecMapa" alt="fotoTec" width="100px" height="auto"><div class="card-body"><h5 class="card-title">' + nombre + '</h5><p class="card-text">' 
-          + especialidad + '.</p><a onclick="comprar()" class="btn btn-primary">Contratar</a></div></div>'
+          + especialidad + '\n Monto: ' + montoo + '.</p><a onclick="comprar()" class="btn btn-primary">Contratar</a></div></div>'
         marker = new google.maps.Marker({
           position: location,
           map: map,
@@ -70,6 +71,7 @@
           infoWindow.setContent( texto );
           infoWindow.open( map, this );
           usuarioAbierto = username
+          monto = montoo
           });
       }
 
@@ -79,10 +81,10 @@
 
       function testMarker() {
         '<% localizables.forEach(function(localizable) { %>'
-        listaLoc.push({"lat":parseFloat('<%=localizable.lat%>'), "long":parseFloat('<%=localizable.long%>'), "nombre": "<%=localizable.name%>", "especialidad": "<%=localizable.especialidad%>", "username": "<%=localizable.username%>", "foto": "<%=localizable.foto%>"})
+        listaLoc.push({"lat":parseFloat('<%=localizable.lat%>'), "long":parseFloat('<%=localizable.long%>'), "nombre": "<%=localizable.name%>", "especialidad": "<%=localizable.especialidad%>", "username": "<%=localizable.username%>", "foto": "<%=localizable.foto%>", "amount": "<%=localizable.amount%>"})
         '<%})%>'
         for(i = 0; i < listaLoc.length; i++){
-          addMarker(new google.maps.LatLng(listaLoc[i].lat, listaLoc[i].long),listaLoc[i].nombre, listaLoc[i].especialidad, listaLoc[i].username, listaLoc[i].foto)
+          addMarker(new google.maps.LatLng(listaLoc[i].lat, listaLoc[i].long),listaLoc[i].nombre, listaLoc[i].especialidad, listaLoc[i].username, listaLoc[i].foto, listaLoc[i].amount)
           
         }
       }

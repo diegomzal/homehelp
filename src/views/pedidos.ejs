@@ -2,32 +2,70 @@
 
 <br>
 <h1>Historial de Pedidos activos</h1>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AWOGrvFGUSaAL5pOeh395F7pSmSCWcbKsc1kEmh4EF724cpxzLCjIdquF5paayn5lxNduVhyayA4FG07">
+  </script>
 
 <table class="table table-dark">
         <thead>
               <tr>
               <th scope="col">Pedido a</th>
+              <th scope="col">Monto</th>
               <th scope="col">Status</th>
               <th scope="col">Acción</th>
               <th scope="col">Cancelar</th>
               </tr>
         </thead>
         <tbody>
+                
               <% pedidos.forEach(function(pedido) { %>
               <% if(pedido.pedidoDe == user.username) { %>
+                    <script>
+                        paypal.Buttons({
+                            style: {
+                                layout: 'horizontal',
+                                tagline: false
+                            },
+                            createOrder: function(data,actions){
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: '<%= pedido.amount %>'
+                                        }
+                                    }]
+                                });
+                            },
+                            onApprove: function(data, actions){
+                                return actions.order.capture().then(function(details){
+                                    alert("Transacción completada por" + details.payer.name.given_name);
+
+                                    return fetch('/paypal-transaction-complete', {
+                                        method: 'post',
+                                        headers: {
+                                            'content-type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            orderID: data.orderID
+                                        })
+                                    });
+                                });
+                            }
+                        }).render('#paypal-button-container');
+                      </script>
                     <tr>
                     <td><%= pedido.pedidoA %></td>
+                    <td><%= pedido.amount %>$</td>
                     <td><%= pedido.status %></td>
                     <% if(pedido.status == 'aceptada') { %>
                         <td>Por favor, esperar llamada del tecnico</td>
                     <% }else if(pedido.status == 'terminada'){ %>
-                        <td><a class="btn btn-danger" onclick="pagarServicio('<%= pedido.id %>')">Pagar</a></td>
+                        <td><div onclick="pagarPedido('<%= pedido.id %>', '<%= pedido.amount %>')" id="paypal-button-container"></div></td>
                     <% }else if(pedido.status == 'pagada'){ %>
-                        <td><a class="btn btn-danger" onclick="valorarServicio('<%= pedido.id %>')">Valorar</a></td>
+                        <td><a class="btn btn-danger" onclick="valorarPedido('<%= pedido.id %>')">Valorar</a></td>
                     <% }else if(pedido.status == 'requested') {%>
                     <td>Esperar a que el tecnico acepte su request.</td>
                     <% } %>
-                    <td><a class="btn btn-danger red eliminar" onclick="eliminarServicio('<%= pedido.id %>')">Eliminar Servicio</a></td> 
+                    <td><a class="btn btn-danger red eliminar" onclick="eliminarPedido('<%= pedido.id %>')">Eliminar Servicio</a></td> 
                     </tr>
               <% }}) %>       
         </tbody>

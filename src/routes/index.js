@@ -52,8 +52,9 @@ router.get('/perfil', isAuthenticated, async(req, res, next) => {
 router.put('/perfil', isAuthenticated, async(req, res, next) => {
     var lat = req.body.lat;
     var long = req.body.long;
+    var monto = req.body.monto;
 
-    User.findOneAndUpdate({username: req.user.username}, {lat: lat, long: long}, function(err, doc){
+    User.findOneAndUpdate({username: req.user.username}, {lat: lat, long: long, amount: monto}, function(err, doc){
         if(err) return res.send(500, {error: err});
     })
     res.render('perfil')
@@ -115,6 +116,7 @@ router.put('/mapa', isAuthenticated, async(req, res, next) => {
     var cliente = req.body.cliente;
     var tecnico = req.body.tecnico;
     var telefono = req.body.numero;
+    var amount = req.body.amount;
 
     console.log(cliente)
     const newService = new Service();
@@ -122,6 +124,7 @@ router.put('/mapa', isAuthenticated, async(req, res, next) => {
     newService.pedidoA = tecnico;
     newService.telefono = telefono;
     newService.status = "requested";
+    newService.amount = amount;
     newService.id = new Date().getTime()+cliente+tecnico;
     console.log(newService.id)
     await newService.save();

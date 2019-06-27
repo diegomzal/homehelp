@@ -38,30 +38,38 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script>
         function activarUbicacion(){
-            infoWindow = new google.maps.InfoWindow;
-            var pos = 2;
-            if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-                };    
-                
-                //guardar posicion
-                $.ajax({
-                    url: '/perfil',
-                    type: 'PUT',
-                    data: "lat="+pos.lat+"&long="+pos.lng
-                })
+            monto = document.getElementById("montoid").value
+            if(isNaN(monto)){
+                alert("Ingrese solo numeros")
+            }else if(monto < 10){
+                alert("Monto debe ser mayor a 10!")
+            }else{
+                infoWindow = new google.maps.InfoWindow;
+                var pos = 2;
+                if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                    };    
+                    
+                    //guardar posicion
+                    $.ajax({
+                        url: '/perfil',
+                        type: 'PUT',
+                        data: "lat="+pos.lat+"&long="+pos.lng+"&monto="+monto
+                    })
 
 
             })}
+            }
+            
         }
         function desactivarUbicacion(){
             $.ajax({
                     url: '/perfil',
                     type: 'PUT',
-                    data: "lat=&long="
+                    data: "lat=&long=&monto="
                 })
 
 
