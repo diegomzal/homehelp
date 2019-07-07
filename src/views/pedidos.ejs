@@ -5,6 +5,27 @@
 <script
     src="https://www.paypal.com/sdk/js?client-id=AWOGrvFGUSaAL5pOeh395F7pSmSCWcbKsc1kEmh4EF724cpxzLCjIdquF5paayn5lxNduVhyayA4FG07">
   </script>
+  <script>
+      function abrir(id){
+                  $("."+id).collapse('toggle');
+            }
+
+        function valorarPedido(id, pedidoA){
+            valoracion = parseFloat(document.getElementById('valor-'+id).value)
+            if(valoracion <= 5 && valoracion >= 0){
+                $.ajax({
+                    url: '/pedidos/valorarPedido',
+                    type: 'PUT',
+                    data: "tecnico=" + pedidoA + "&valoracion=" + valoracion + "&id=" + id
+                 })
+                alert("Ha valorado con una puntación de "+valoracion)
+            }else{
+                alert("La valoración debe estar entre 0 y 5!")
+            }
+        
+        }
+  
+  </script>
 
 <table class="table table-dark">
         <thead>
@@ -61,7 +82,15 @@
                               </script>
                         <td><div id="paypal-button-container"></div></td>
                     <% }else if(pedido.status == 'pagada'){ %>
-                        <td><a class="btn btn-danger" onclick="valorarPedido('<%= pedido.id %>')">Valorar</a></td>
+                        <td><button type="button" class="btn btn-primary" onclick="abrir('<%= pedido.id %>')">Valorar</button>
+                            <div class="collapse <%= pedido.id %>">
+                                <h3>Valorar servicio:</h3>
+                                <b>Ingrese su valoración (0 - 5)</b><input type="number" id="valor-<%= pedido.id %>" pattern="[0-5]"> de 5 <br>
+                                <button type="button" class="btn btn-warning" onclick="valorarPedido('<%= pedido.id %>', '<%=pedido.pedidoA%>')">Enviar</button>
+
+                            </div>
+                        
+                        </td>
                     <% }else if(pedido.status == 'requested') {%>
                     <td>Esperar a que el tecnico acepte su request.</td>
                     <% } %>

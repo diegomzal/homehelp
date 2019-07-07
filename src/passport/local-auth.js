@@ -38,6 +38,8 @@ passport.use('local-register', new LocalStrategy({
             newUser.direccion = req.body.direccion;
             newUser.esTecnico = req.body.esTecnico;
             newUser.especialidad = req.body.especialidad;
+            newUser.numPedidos = 0;
+            newUser.valoracion = 0;
             await newUser.save();
             done(null, newUser);
         }

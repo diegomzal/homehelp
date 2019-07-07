@@ -13,6 +13,7 @@
 
         <% if (user.especialidad) {%>
         <li class="list-group-item"><img src="image/icono-usuario-b.png" width="30px"><%= user.especialidad %></li>  
+        <li class="list-group-item"><img src="image/icono-usuario-b.png" width="30px">Mi valoración: <%= parseFloat(user.valoracion).toFixed(1) %></li>  
         <li class="list-group-item">
             <% if(user.foto) {%>
                   Tu perfil tiene una foto - 

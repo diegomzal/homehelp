@@ -36,7 +36,7 @@
         </thead>
         <tbody>
               <% pedidos.forEach(function(pedido) { %>
-              <% if(pedido.pedidoA == user.username && (pedido.status == 'aceptada' || pedido.status == 'terminada' || pedido.status == 'pagada')) { %>
+              <% if(pedido.pedidoA == user.username && (pedido.status == 'aceptada' || pedido.status == 'terminada' || pedido.status == 'pagada' || pedido.status == 'valorada')) { %>
                     <tr>
                     <td><%= pedido.pedidoDe %></td>
                     <td><%= pedido.status %></td>

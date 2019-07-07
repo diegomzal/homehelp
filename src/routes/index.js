@@ -4,6 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
 const Service = require('../models/service');
+const Transaction = require('../models/transaction')
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 const payPalClient = require('../paypal');
 
@@ -78,6 +79,37 @@ router.put('/perfil/aceptarPedido', isAuthenticated, async(req, res, next) => {
     await res.send('aceptado')
 })
 
+router.put('/pedidos/valorarPedido', isAuthenticated, async(req,res,next)=>{
+    var username = req.body.tecnico;
+    var valoracion = req.body.valoracion;
+    var valoracionActual = 0;
+    var pedidoActual = 0;
+    User.findOne({username: username}, function(err, doc){
+        if(err) throw err;
+        valoracionActual = doc.valoracion;
+        pedidoActual = doc.numPedidos;
+        console.log("ValoracionActual: "+ valoracionActual)
+        console.log("pedidoActual: "+ pedidoActual)
+        valoracionActual = valoracionActual * pedidoActual
+        pedidoActual = pedidoActual + 1
+        console.log("----")
+        console.log("ValoracionActual: "+ valoracionActual)
+        console.log("pedidoActual: "+ pedidoActual)
+        valoracionActual = (parseFloat(valoracionActual) + parseFloat(valoracion)) / pedidoActual
+        console.log("----")
+        console.log("ValoracionActual: "+ valoracionActual)
+        User.findOneAndUpdate({username: username},{numPedidos: pedidoActual, valoracion: valoracionActual}, function(err, doc){
+            if(err) return res.send(500, {error: err});
+        })
+    });
+    var id = req.body.id;
+    Service.findOneAndUpdate({id: id},{status: "valorada"},function(err, doc){
+        if(err) return res.send(500, {error: err});
+    })
+    
+    await res.send('Enviado')
+})
+
 router.get('/pedidos', isAuthenticated, async(req, res, next) => {
     var pedidos = await Service.find({pedidoDe: {$ne: null}})
     res.render('pedidos', {pedidos});
@@ -130,6 +162,10 @@ router.post('/paypal-transaction-complete', isAuthenticated, async(req, res, nex
     Service.findOneAndUpdate({id: pedidoID},{status: "pagada"},function(err, doc){
         if(err) return res.send(500, {error: err});
     })
+    const newTransaction = new Transaction();
+    newTransaction.paypalID = orderID;
+    newTransaction.servicioID = pedidoID;
+    newTransaction.save();
 
     res.send(200);
 })
@@ -182,6 +218,8 @@ router.post('/setfoto', isAuthenticated, async(req, res, next) => {
     })
     await res.render('setfoto')
 })
+
+
 
 function isAuthenticated(req, res, next){
     if(req.isAuthenticated()) {
