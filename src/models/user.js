@@ -22,7 +22,7 @@ const userSchema = new Schema({
     valoracion: Number
 })
 
-userSchema.methods.hashear = (password) => {
+userSchema.methods.hashear = function(password){
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 }
 
