@@ -37,6 +37,13 @@
 <br>
 
 <% if (user.especialidad) {%>
+<div class="alert alert-danger collapse" role ="alert" id="ingreseSoloNumeros">
+      Ingrese solo números!
+</div>
+<div class="alert alert-danger collapse" role ="alert" id="ingreseMayores0">
+      Monto debe ser mayor a 0!
+</div>
+
 <h2>Técnico - Ubicación</h2>
 <button type="button" class="btn btn-primary btn-lg btn-block" onclick = "activarUbicacion()">Activar ubicación</button>
 <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="desactivarUbicacion()">Desactivar ubicación</button>
@@ -50,6 +57,12 @@
 <br>
       <% if (pedidos.length > 0) { %>
       <h2>Pedidos pendientes de clientes</h2>
+      <div class="alert alert-success collapse" role="alert" id="pedidoAceptado">
+            El pedido ha sido aceptado. Se moverá a su registro de pedidos aceptados.
+          </div>
+          <div class="alert alert-warning collapse" role="alert" id="pedidoEliminado">
+            El pedido ha sido eliminado.
+          </div>
       <table class="table table-dark">
             <thead>
                   <tr>

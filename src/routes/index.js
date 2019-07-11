@@ -60,7 +60,7 @@ router.put('/perfil', isAuthenticated, async(req, res, next) => {
     User.findOneAndUpdate({username: req.user.username}, {lat: lat, long: long, amount: monto}, function(err, doc){
         if(err) return res.send(500, {error: err});
     })
-    res.render('perfil')
+    res.send('AgregadoUbicacion')
 })
 
 router.put('/perfil/eliminarPedido', isAuthenticated, async(req, res, next) => {

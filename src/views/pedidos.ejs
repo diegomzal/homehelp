@@ -2,6 +2,15 @@
 
 <br>
 <h1>Historial de Pedidos activos</h1>
+<div class="alert alert-danger collapse" role="alert" id="valoracionRango">
+    La valoración debe estar entre 0 y 5!
+  </div>
+  <div class="alert alert-success collapse" role="alert" id="transaccionCompleta">
+    La transacción ha sido completada!
+  </div>  
+  <div class="alert alert-success collapse" role="alert" id="valoracionHecha">
+    Valoración enviada. Muchas gracias.
+  </div>  
 <script
     src="https://www.paypal.com/sdk/js?client-id=AWOGrvFGUSaAL5pOeh395F7pSmSCWcbKsc1kEmh4EF724cpxzLCjIdquF5paayn5lxNduVhyayA4FG07">
   </script>
@@ -18,9 +27,11 @@
                     type: 'PUT',
                     data: "tecnico=" + pedidoA + "&valoracion=" + valoracion + "&id=" + id
                  })
-                alert("Ha valorado con una puntación de "+valoracion)
+                //alert("Ha valorado con una puntación de "+valoracion)
+                $("#valoracionHecha").show();
             }else{
-                alert("La valoración debe estar entre 0 y 5!")
+                //alert("La valoración debe estar entre 0 y 5!")
+                $('#valoracionRango').show();
             }
         
         }
@@ -70,7 +81,7 @@
                                     },
                                     onApprove: function(data, actions){
                                         return actions.order.capture().then(function(details){
-                                            alert("Transacción completada por " + details.payer.name.given_name);                                    
+                                            $('#transaccionCompleta').show();                                 
                                             $.ajax({
                                                 url: '/paypal-transaction-complete',
                                                 type: 'POST',

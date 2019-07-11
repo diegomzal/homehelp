@@ -1,6 +1,10 @@
 <%- layout('layouts/pedidosLayout.ejs') %>
 <br>
+
 <h1>Historial de servicios aceptados</h1>
+<div class="alert alert-primary collapse" role="alert" id="pedidoFacturado">
+      Pedido facturado.
+    </div>
       <script>
             function abrir(id){
                   $("."+id).collapse('toggle');
@@ -13,7 +17,8 @@
                         type: 'PUT',
                         data: "id=" + id + "&monto=" + monto
                   })
-            alert("Monto facturado por "+monto+"$")
+            //alert("Monto facturado por "+monto+"$")
+            $('#pedidoFacturado').show();
             }
 
             function calcPrecio(id, monto){

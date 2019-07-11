@@ -24,6 +24,7 @@
                 data: "id=" + id
             })
             alert("El pedido ha sido eliminado")
+            location.reload(true)
         }
         function eliminarServicio(id){
             $.ajax({
@@ -32,6 +33,7 @@
                 data: "id=" + id
             })
             alert("El servicio ha sido eliminado")
+            location.reload(true)
         }
         function terminarServicio(id){
             $.ajax({
@@ -40,6 +42,7 @@
                 data: "id=" + id
             })
             alert("El servicio ha sido terminado.")
+            location.reload(true)
         }
         function cancelarServicio(id){
             $.ajax({
@@ -48,6 +51,7 @@
                 data: "id=" + id
             })
             alert("El servicio ha sido cancelado.")
+            location.reload(true)
         }
 
     </script>   

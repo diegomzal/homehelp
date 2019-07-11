@@ -1,4 +1,7 @@
 <%- layout('layouts/perfilLayout.ejs') %>
+<div class="alert alert-primary collapse" role="alert" id="pedidoEnviado">
+  Su pedido ha sido enviado al técnico.
+</div>
     <div id="map" style="width: auto; height: 800px; border-style: double; position: relative; overflow: hidden;"></div>
 
     <script>
@@ -12,6 +15,7 @@
                     type: 'PUT',
                     data: "&cliente="+usuario+"&tecnico="+persona+"&numero="+telefono+"&amount="+monto
                 })
+        
       }
 
       var map;
@@ -51,7 +55,9 @@
       var monto = 0;
       function comprar(){
           contratar(usuarioAbierto, monto)
-          alert('Ha contratado a '+ usuarioAbierto + ' por $' + monto + ' dolares la hora.')
+          document.getElementById("botonContratar").classList.add("disabled")
+          //alert('Ha contratado a '+ usuarioAbierto + ' por $' + monto + ' dolares la hora.')
+          $('#pedidoEnviado').show();
           console.log(usuarioAbierto)
       }
       function addMarker(location, nombre, especialidad, username, foto, montoo, valor) {
@@ -66,7 +72,7 @@
           + '" class="card-img-top fotoTecMapa" alt="fotoTec" width="100px" height="auto"><div class="card-body"><h5 class="card-title">' + nombre + '</h5><p class="card-text">' 
           + especialidad + '\n Monto por hora: ' + montoo 
           + '\n Valoración: ' + valor + mensaje
-          + '.</p><a onclick="comprar()" class="btn btn-primary">Contratar</a></div></div>'
+          + '.</p><a onclick="comprar()" class="btn btn-primary" id="botonContratar">Contratar</a></div></div>'
         
         marker = new google.maps.Marker({
           position: location,

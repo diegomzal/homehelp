@@ -24,7 +24,9 @@
                 type: 'PUT',
                 data: "id=" + id
             })
-            alert("El pedido ha sido eliminado")
+            //alert("El pedido ha sido eliminado")
+            $('#pedidoEliminado').show();
+            location.reload(true)
         }
         function aceptar(id){
             $.ajax({
@@ -32,7 +34,9 @@
                 type: 'PUT',
                 data: "id=" + id
             })
-            alert("El pedido ha sido aceptado. Se moverá a su historial de servicios.")
+            //alert("El pedido ha sido aceptado. Se moverá a su historial de servicios.")
+            $('#pedidoAceptado').show();
+            location.reload(true)
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYvkIeO2BKYP5R46ljTG0qTJFDuAZA1eA&callback=initMap"
@@ -42,9 +46,11 @@
         function activarUbicacion(){
             monto = document.getElementById("montoid").value
             if(isNaN(monto)){
-                alert("Ingrese solo numeros")
+                //alert("Ingrese solo numeros")
+                $('#ingreseSoloNumeros').show();
             }else if(monto <= 0){
-                alert("Monto debe ser mayor a 0!")
+                //alert("Monto debe ser mayor a 0!")
+                $('#ingreseMayores0').show();
             }else{
                 infoWindow = new google.maps.InfoWindow;
                 var pos = 2;
@@ -61,7 +67,7 @@
                         type: 'PUT',
                         data: "lat="+pos.lat+"&long="+pos.lng+"&monto="+monto
                     })
-
+                    location.reload(true)
 
             })}
             }
@@ -73,6 +79,7 @@
                     type: 'PUT',
                     data: "lat=&long=&monto="
                 })
+                location.reload(true)
 
 
         }   
